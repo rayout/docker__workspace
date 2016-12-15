@@ -1,6 +1,6 @@
 export TERM="xterm-256color"
 
-export ZSH=/root/.oh-my-zsh
+export ZSH=/home/workspace/.oh-my-zsh
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 #ZSH_THEME="robbyrussell"
