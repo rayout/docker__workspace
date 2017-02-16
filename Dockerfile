@@ -108,6 +108,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 USER root
 RUN curl -s http://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
+RUN usermod -aG sudo workspace
+RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
 
 USER workspace
 RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
@@ -116,5 +118,6 @@ RUN echo "alias composer='/usr/local/bin/composer'" >> ~/.zshrc \
 #zsh as shell
 RUN sudo chsh -s /usr/bin/zsh workspace
 
+USER workspace
 WORKDIR /var/www
 CMD ["su", "-", "workspace", "-c", "/usr/bin/zsh"]
