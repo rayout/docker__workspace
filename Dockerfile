@@ -113,11 +113,9 @@ RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
 
 USER workspace
 RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
-RUN echo "alias composer='/usr/local/bin/composer'" >> ~/.zshrc \
 
 #zsh as shell
 RUN sudo chsh -s /usr/bin/zsh workspace
 
-USER workspace
 WORKDIR /var/www
 CMD ["su", "-", "workspace", "-c", "/usr/bin/zsh"]
