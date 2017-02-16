@@ -107,11 +107,11 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER root
 RUN curl -s http://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/
+RUN mv composer.phar /usr/local/bin/composer
 
 USER workspace
-RUN /usr/local/bin/composer.phar global require "hirak/prestissimo:^0.2"
-RUN echo "alias composer='/usr/local/bin/composer.phar'" >> ~/.zshrc \
+RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
+RUN echo "alias composer='/usr/local/bin/composer'" >> ~/.zshrc \
 
 #zsh as shell
 RUN sudo chsh -s /usr/bin/zsh workspace
