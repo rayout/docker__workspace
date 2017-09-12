@@ -54,6 +54,7 @@ RUN apt-get update && apt-get install -y --force-yes \
         php7.0-sqlite \
         php7.0-sqlite3 \
         php7.0-zip \
+        php7.0-gd \
         php7.0-memcached \
         php7.0-tidy \
         sqlite3 \
