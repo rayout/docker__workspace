@@ -118,6 +118,6 @@ RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
 #zsh as shell
 RUN sudo chsh -s /usr/bin/zsh workspace
 
-COPY env.php /var/www/
+COPY env.php /var/utils/
 WORKDIR /var/www
 CMD ["su", "-", "workspace", "-c", "/usr/bin/zsh"]
