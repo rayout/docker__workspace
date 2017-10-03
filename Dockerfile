@@ -119,5 +119,7 @@ RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
 RUN sudo chsh -s /usr/bin/zsh workspace
 
 COPY env.php /var/utils/
+COPY gulpfile.js /var/utils/
+
 WORKDIR /var/www
 CMD ["su", "-", "workspace", "-c", "/usr/bin/zsh"]
