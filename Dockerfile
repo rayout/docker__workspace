@@ -112,14 +112,18 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN usermod -aG sudo workspace
 RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
 
+COPY env.php /var/utils/
+COPY gulpfile.js /var/utils/
+
+WORKDIR /var/utils/
+RUN npm install gulp gulp-run gulp-watch
+
+
 USER workspace
 RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
 
 #zsh as shell
 RUN sudo chsh -s /usr/bin/zsh workspace
-
-COPY env.php /var/utils/
-COPY gulpfile.js /var/utils/
 
 WORKDIR /var/www
 CMD ["su", "-", "workspace", "-c", "/usr/bin/zsh"]
