@@ -1,10 +1,12 @@
 <?php
 
-$options = getopt('e:');
+$options = getopt('e:', ["path:"]);
 
 if(empty($options['e'])){
     exit("empty env param\nenter -e ENV\n");
 }
+
+$path_prefix = isset($options['path']) ? $options['path'] : '/var/www/';
 
 $env = $options['e'];
 
@@ -39,8 +41,8 @@ function merge_env($env_default, $env_custom){
     return $result;
 }
 
-$env_file_arr           = get_env_content($env_file);
-$env_file_default_arr   = get_env_content($env_file_default);
+$env_file_arr           = get_env_content($path_prefix . $env_file);
+$env_file_default_arr   = get_env_content($path_prefix . $env_file_default);
 $result                 = merge_env($env_file_default_arr, $env_file_arr);
 
 
@@ -59,4 +61,4 @@ $header = "
 #         php env.php -e CURRENT_ENV
 ################################################
 \n";
-file_put_contents('.env', $header . implode("\n", $result));
+file_put_contents($path_prefix . '.env', $header . implode("\n", $result));
