@@ -10,6 +10,10 @@ $path_prefix = isset($options['path']) ? $options['path'] : '/var/www/';
 
 $env = $options['e'];
 
+if ($env == 'master') {
+    $env = 'production';
+}
+
 $env_file_default = '.env.default';
 $env_file = ".env.$env";
 
