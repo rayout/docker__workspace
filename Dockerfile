@@ -1,14 +1,14 @@
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
 RUN DEBIAN_FRONTEND=noninteractive
-RUN locale-gen en_US.UTF-8
+RUN apt-get update && apt-get install -y --no-install-recommends locales && locale-gen ru_RU.UTF-8
 
-ENV LANGUAGE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
+ENV LANGUAGE=ru_RU.UTF-8
+ENV LC_ALL=ru_RU.UTF-8
 ENV LC_CTYPE=UTF-8
-ENV LANG=en_US.UTF-8
+ENV LANG=ru_RU.UTF-8
 ENV TERM xterm
 
 #####################################
@@ -29,8 +29,9 @@ ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install "software-properties-common" (for the "add-apt-repository")
-RUN apt-get update && apt-get install -y \
-    software-properties-common
+RUN apt-get install -y --no-install-recommends \
+    software-properties-common \
+    sudo
 
 #####################################
 # Setup PHP
@@ -41,21 +42,21 @@ RUN add-apt-repository -y \
     ppa:ondrej/php
 
 # Install PHP-CLI 7, some PHP extentions and some useful Tools with APT
-RUN apt-get update && apt-get install -y --force-yes \
-        php7.0-cli \
-        php7.0-common \
-        php7.0-curl \
-        php7.0-json \
-        php7.0-xml \
-        php7.0-mbstring \
-        php7.0-mcrypt \
-        php7.0-mysql \
-        php7.0-pgsql \
-        php7.0-sqlite \
-        php7.0-sqlite3 \
-        php7.0-zip \
-        php7.0-memcached \
-        php7.0-tidy \
+RUN apt-get update && apt-get install -y \
+        php7.1-cli \
+        php7.1-common \
+        php7.1-curl \
+        php7.1-json \
+        php7.1-xml \
+        php7.1-mbstring \
+        php7.1-mcrypt \
+        php7.1-mysql \
+        php7.1-pgsql \
+        php7.1-sqlite \
+        php7.1-sqlite3 \
+        php7.1-zip \
+        php7.1-memcached \
+        php7.1-tidy \
         sqlite3 \
         libsqlite3-dev \
         git \
@@ -97,10 +98,6 @@ RUN npm install -g \
 
 RUN n 5.10.0
 
-# Clean up
-USER root
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 #####################################
 # Install Composer
 #####################################
@@ -110,6 +107,12 @@ RUN curl -s http://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN usermod -aG sudo workspace
 RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
+
+# Clean up
+USER root
+RUN apt-get purge -y --auto-remove software-properties-common python-software-properties locales \
+&& apt-get clean && rm -rf /tmp/* /var/tmp/* \
+&& rm -rf /var/lib/apt/lists/*
 
 USER workspace
 RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
