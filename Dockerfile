@@ -55,6 +55,7 @@ RUN apt-get update && apt-get install -y \
         php7.1-sqlite \
         php7.1-sqlite3 \
         php7.1-zip \
+        php7.1-gd \
         php7.1-memcached \
         php7.1-tidy \
         sqlite3 \
@@ -107,6 +108,13 @@ RUN curl -s http://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN usermod -aG sudo workspace
 RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
+
+# ENV gen
+COPY env.php /var/utils/
+COPY gulpfile.js /var/utils/
+
+WORKDIR /var/utils/
+RUN npm install gulp gulp-run gulp-watch
 
 # Clean up
 USER root
