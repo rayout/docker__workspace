@@ -58,6 +58,7 @@ RUN apt-get update && apt-get install -y \
         php7.1-gd \
         php7.1-memcached \
         php7.1-tidy \
+        php7.1-bcmath \
         sqlite3 \
         libsqlite3-dev \
         git \
