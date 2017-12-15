@@ -3,13 +3,16 @@ FROM ubuntu:xenial
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
 RUN DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends locales && locale-gen ru_RU.UTF-8
+RUN apt-get update && apt-get install -y --no-install-recommends language-pack-ru-base locales
+RUN sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
+RUN locale-gen ru_RU.UTF-8
 
 ENV LANGUAGE=ru_RU.UTF-8
 ENV LC_ALL=ru_RU.UTF-8
 ENV LC_CTYPE=UTF-8
 ENV LANG=ru_RU.UTF-8
 ENV TERM xterm
+RUN dpkg-reconfigure --frontend noninteractive locales
 
 #####################################
 # Non-Root User:
