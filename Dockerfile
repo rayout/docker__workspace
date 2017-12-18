@@ -9,7 +9,7 @@ RUN locale-gen ru_RU.UTF-8
 
 ENV LANGUAGE=ru_RU.UTF-8
 ENV LC_ALL=ru_RU.UTF-8
-ENV LC_CTYPE=UTF-8
+ENV LC_CTYPE=ru_RU.UTF-8
 ENV LANG=ru_RU.UTF-8
 ENV TERM xterm
 RUN dpkg-reconfigure --frontend noninteractive locales
@@ -122,9 +122,6 @@ RUN npm install gulp gulp-run gulp-watch
 
 # Clean up
 USER root
-RUN apt-get purge -y --auto-remove software-properties-common python-software-properties locales \
-&& apt-get clean && rm -rf /tmp/* /var/tmp/* \
-&& rm -rf /var/lib/apt/lists/*
 
 USER workspace
 RUN /usr/local/bin/composer global require "hirak/prestissimo:^0.2"
