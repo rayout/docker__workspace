@@ -71,7 +71,8 @@ RUN apt-get update && apt-get install -y \
         nodejs \
         nodejs-dev \
         npm \
-        zsh
+        zsh \
+        php-imagick
 
 
 #####################################
