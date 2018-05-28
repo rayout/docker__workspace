@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
@@ -22,7 +22,8 @@ RUN dpkg-reconfigure --frontend noninteractive locales
 ARG PUID=1000
 ARG PGID=1000
 RUN groupadd -g $PGID workspace && \
-useradd -u $PUID -g  workspace -m  workspace
+useradd -u $PUID -g  workspace -m  workspace && \
+usermod -p "*" workspace
 
 #####################################
 # Set Timezone
@@ -34,6 +35,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Install "software-properties-common" (for the "add-apt-repository")
 RUN apt-get install -y --no-install-recommends \
     software-properties-common \
+    dnsutils iputils-ping\
     sudo
 
 #####################################
@@ -92,8 +94,6 @@ RUN echo "alias phpunit='./vendor/bin/phpunit'" >> ~/.zshrc
 # NodeJS
 #####################################
 USER root
-# Add a symbolic link for Node
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Install gulp and bower with NPM
 RUN npm install -g \
