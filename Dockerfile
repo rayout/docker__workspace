@@ -4,8 +4,11 @@ MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
 RUN DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends language-pack-ru-base locales
-RUN sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
-RUN locale-gen ru_RU.UTF-8
+RUN sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen && \
+    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+RUN locale-gen && update-locale LANG=ru_RU.UTF-8
+RUN echo "LANGUAGE=ru_RU.UTF-8" >> /etc/default/locale && \
+    echo "LC_ALL=ru_RU.UTF-8" >> /etc/default/locale
 
 ENV LANGUAGE=ru_RU.UTF-8
 ENV LC_ALL=ru_RU.UTF-8
@@ -33,9 +36,9 @@ ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install "software-properties-common" (for the "add-apt-repository")
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common \
-    dnsutils iputils-ping\
+    dnsutils iputils-ping \
     sudo
 
 #####################################
