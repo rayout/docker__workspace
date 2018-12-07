@@ -115,6 +115,7 @@ RUN n 5.10.0
 USER root
 RUN wget https://getcomposer.org/download/1.7.2/composer.phar
 RUN mv composer.phar /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
 RUN usermod -aG sudo workspace
 RUN sed -i 's/\%sudo.*/\%sudo     ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers
 
