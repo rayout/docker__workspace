@@ -78,7 +78,8 @@ RUN apt-get update && apt-get install -y \
         nodejs-dev \
         npm \
         zsh \
-        php-imagick
+        php-imagick \
+        php7.1-pspell aspell-ru aspell-en
 
 
 #####################################
