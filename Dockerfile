@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:18.04
 
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
@@ -45,28 +45,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Setup PHP
 #####################################
 
-# Add the "PHP 7" ppa
-RUN add-apt-repository -y \
-    ppa:ondrej/php
-
 # Install PHP-CLI 7, some PHP extentions and some useful Tools with APT
 RUN apt-get update && apt-get install -y \
-        php7.1-cli \
-        php7.1-common \
-        php7.1-curl \
-        php7.1-json \
-        php7.1-xml \
-        php7.1-mbstring \
-        php7.1-mcrypt \
-        php7.1-mysql \
-        php7.1-pgsql \
-        php7.1-sqlite \
-        php7.1-sqlite3 \
-        php7.1-zip \
-        php7.1-gd \
-        php7.1-memcached \
-        php7.1-tidy \
-        php7.1-bcmath \
+        php7.2-cli \
+        php7.2-common \
+        php7.2-curl \
+        php7.2-json \
+        php7.2-xml \
+        php7.2-mbstring \
+        php7.2-mysql \
+        php7.2-pgsql \
+        php7.2-sqlite \
+        php7.2-sqlite3 \
+        php7.2-zip \
+        php7.2-gd \
+        php7.2-memcached \
+        php7.2-tidy \
+        php7.2-bcmath \
+        php7.2-gmp \
+        php7.2-intl \
         sqlite3 \
         libsqlite3-dev \
         git \
@@ -79,7 +76,7 @@ RUN apt-get update && apt-get install -y \
         npm \
         zsh \
         php-imagick \
-        php7.1-pspell aspell-ru aspell-en
+        php7.2-pspell aspell-ru aspell-en
 
 
 #####################################
